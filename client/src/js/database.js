@@ -17,13 +17,11 @@ export const putDb = async (content) => {
   const db = await openDB('jate', 1);
   const tx = db.transaction('jate', 'readwrite');
   const store = tx.objectStore('jate');
-  const request = store.add(content);
+  const request = store.put({id:1,value:content});
 
   const result = await request;
   console.log('content added to database', result);
   
-  
-  console.error('putDb not implemented')
 };
 
 // TODO: Add logic for a method that gets all the content from the database
@@ -31,11 +29,13 @@ export const getDb = async () => {
   const db = await openDB('jate', 1);
   const tx = db.transaction('jate', 'readonly');
   const store = tx.objectStore('jate');
-  const request = store.getAll();
+  const request = store.get(1);
 
   const result = await request;
   console.log('content retrieved from database', result);
 
-  console.error('getDb not implemented')};
+  return  result?.value
+}
+
 
 initdb();
